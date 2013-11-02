@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>Impact Game</title>
+	<style type="text/css">
+		html,body {
+			background-color: #000;
+			color: #fff;
+			font-family: helvetica, arial, sans-serif;
+			margin: 0;
+			padding: 0;
+			font-size: 12pt;
+		}
+
+		.centerized {
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			margin: auto;
+
+			width:100%;
+			height:80px;
+			overflow:hidden;
+			background:#000000;
+			text-align: center;
+		}
+
+		.leaderboard {
+			padding:3;
+			font-size: 10pt;
+			position: absolute;
+			left:0;
+			bottom:0;
+			border-top-right-radius: 4px;
+		}
+
+		#nicksetter {
+			margin:auto;
+			width:142px;
+			height:80px;
+			overflow:hidden;
+			background:#000000;
+			z-index:1000000;
+			text-align:center;
+			display: block;
+		}
+	</style>
+
+	<script type="text/javascript">		
+		function simulateKey(type, which, keyCode)
+		{
+			var eventObj = document.createEventObject ?
+				document.createEventObject() : document.createEvent("Events");
+		  
+			if(eventObj.initEvent){
+				eventObj.initEvent(type, true, true);
+			}
+		  
+			eventObj.keyCode = keyCode;
+			eventObj.which = which;
+			
+			document.dispatchEvent ? document.dispatchEvent(eventObj) : document.fireEvent("onkeydown", eventObj);
+		} 
+	
+		respondToSizingMessage = function(e) {
+			if(e.origin == 'http://127.0.0.1') {
+				var spl=e.data.split(':');
+				var type=spl[0];
+				var which=spl[1];
+				var keycode=spl[2];
+				simulateKey( type, which, keycode );
+			}
+			else 
+			{
+				console.log("WRONG ORIGIN");
+			}
+		}
+		// we have to listen for 'message'
+		window.addEventListener('message', respondToSizingMessage, false);
+	</script>
+	<script type="text/javascript" src="gamedevcloud.js"></script>
+	<script type="text/javascript" src="impact.min.js"></script>
+	<script type="text/javascript" src="lib/game/connection.js"></script>
+	<script type="text/javascript" src="lib/game/entities/spawn.js"></script>
+	<script type="text/javascript" src="lib/game/levels/dm1.js"></script>
+	<script type="text/javascript" src="lib/game/entities/particle.js"></script>
+	<script type="text/javascript" src="lib/game/entities/bullet.js"></script>
+	<script type="text/javascript" src="lib/game/entities/player.js"></script>
+	<script type="text/javascript" src="lib/game/main.js"></script>
+</head>
+<body>
+	<div class="centerized">
+		<div id="nicksetter">
+			<b>Eighty</b><br />
+			Nick:
+			<input id="nameField" style="display:block;border:0;width:100%;height:25%;padding:0;margin:0;" type="text"/>
+			<input type="button" style="display:block;width:100%;height:25%;padding:0;margin:0;" value="Join" onClick="nickSet();"/>
+		</div>
+		<canvas id="canvas"></canvas>
+		<div id="leaderboard" class="leaderboard"></div>
+	</div>
+</body>
+</html>
