@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body style="padding:0;margin:0;background:#444;document.getElementById('ifr').contentWindow.focus();">
+	<iframe id="ifr" style="left:0;top:0;bottom:0;right:0;margin:auto;position:absolute;height:80px;width:100%;border:0;" src="game.html"></iframe>
+	
+	<script type="text/javascript">
+		var ifr=document.getElementById('ifr').contentWindow;
+		document.onkeydown = function(e) {
+			ifr.postMessage('keydown:'+e.which+':'+e.keyCode,'http://127.0.0.1/game.html');
+		}
+		document.onkeyup = function(e) {
+			ifr.postMessage('keyup:'+e.which+':'+e.keyCode,'http://127.0.0.1/game.html');
+		}
+	</script>
+</body>
+</html>
